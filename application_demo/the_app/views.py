@@ -16,8 +16,7 @@ def index(request):
         uploaded_file = request.FILES['myfile']
 
         if not uploaded_file.name.endswith('.csv'):
-            # handle
-            print('-')
+            return render(request, 'index.html')
 
         fs = FileSystemStorage()
         filename = fs.save(uploaded_file.name, uploaded_file)
@@ -25,20 +24,16 @@ def index(request):
         # read file
         file_data = uploaded_file.read().decode('utf-8')
         io_string = io.StringIO(file_data)
-        # next(io_string)
-        print(str(file_data))
-        # for column in csv.reader(io_string, delemiter=',', qoutechar="|"):
-        #     print(column[0])
+
         filepath = os.path.join(settings.MEDIA_ROOT,  filename)
-        print("DIR " + str(filepath), flush=True)
-        # airline_safety = AirlineSafety()
+        # print("DIR " + str(filepath), flush=True)
+        # Open file and store inside database table
+        # Note: input can already be inside the table
         with open(filepath, 'r') as csvfile:
             reader = csv.reader(csvfile, delimiter=',', quotechar='|')
             csv_data_iterator = iter(reader)
             next(csv_data_iterator)
             for line in csv_data_iterator:
-                print(line[0] + " " + line[1] + " " + line[2] + " " + line[3] + " " +
-                      line[4] + " " + line[5] + " " + line[6] + " " + line[7], flush=True)
                 airline_safety = AirlineSafety.objects.create(
                     airline=line[0],
                     avail_set_km_per_week=line[1],
@@ -53,9 +48,6 @@ def index(request):
 
 
 def airline_safety_data(request):
-    # https://dev-yakuza.github.io/en/django/response-model-to-json/
-    # safety_data = AirlineSafety.objects.all()
-    # safety_data_list = serializers.serialize('json', safety_data)
     # https://stackoverflow.com/questions/12553599/create-json-response-in-django-with-model
     return JsonResponse(list(AirlineSafety.objects.all().values()), safe=False)
 

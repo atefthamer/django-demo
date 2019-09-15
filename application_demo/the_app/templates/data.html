@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+<table>
+  <tr>
+    <th>Airline</th>
+    <th>Available Seat Km Per Week</th>
+    <th>Incidents 1985-1999</th>
+    <th>Fatal Accidents 1985-1999</th>
+    <th>Fatalities 1985-1999</th>
+    <th>Incidents 2000-2014</th>
+    <th>Fatal Accidents 2000-2014</th>
+    <th>Fatalities 2000-2014</th>
+  </tr>
+  {% for data in safety_data %}
+    <tr>
+        <td>{{ data.airline }}</td>
+        <td>{{ data.avail_set_km_per_week }}</td>
+        <td>{{ data.incidents_85_99 }}</td>
+        <td>{{ data.fatal_accidents_85_99 }}</td>
+        <td>{{ data.fatalities_85_99 }}</td>
+        <td>{{ data.incidents_00_14 }}</td>
+        <td>{{ data.fatal_accidents_00_14 }}</td>
+        <td>{{ data.fatalities_00_14 }}</td>
+    </tr>
+  {% endfor %}
+</table>
+</div>
+{% endblock content%}

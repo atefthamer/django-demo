@@ -1,0 +1,36 @@
+version: "3.7"
+
+services:
+  backend:
+    build: .
+    command:
+      [
+        "./wait-for-it.sh",
+        "database:5432",
+        "--timeout=20",
+        "--",
+        "python",
+        "./application_demo/manage.py",
+        "runserver",
+        "0.0.0.0:8000",
+      ]
+    container_name: atos_django_demo
+    volumes:
+      - ./:/application_demo
+    ports:
+      - 8000:8000
+    restart: unless-stopped
+    depends_on:
+      - database
+  database:
+    image: postgres:latest
+    container_name: atos_postgres_demo
+    environment:
+      - POSTGRES_USER=atefthamer
+      - POSTGRES_PASSWORD=schoolhuismelkweg
+    volumes:
+      - "./db-data:/var/lib/postgresql/data"
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5433:5432"
+    restart: always

@@ -1,0 +1,25 @@
+
+
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block scripts %}
+{% comment %} <script>
+window.onload=function(){
+var responseData = [];
+//axios.get("http://localhost:8000/api/v1/airlines").then(response => (responseData = response.data))
+axios.get('http://localhost:8000/api/v1/airlines')
+    .then(function (response) {
+      responseData = response.data;
+    })
+//debug.log("THe response data -->> " + responseData)
+//alert("H");
+console.log(responseData) 
+console.log(responseData.length) 
+}
+
+</script> {% endcomment %}
+<script src="{% static 'js/test.js' %}"></script>
+
+{% comment %} <canvas id="firstChart"></canvas> {% endcomment %}
+{% endblock scripts %}
+

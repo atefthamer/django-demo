@@ -12,3 +12,6 @@ class AirlineSafety(models.Model):
     incidents_00_14 = models.IntegerField()
     fatal_accidents_00_14 = models.IntegerField()
     fatalities_00_14 = models.IntegerField()
+
+    def __str__(self):
+        return self.airline

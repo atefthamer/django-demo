@@ -19,13 +19,22 @@ from . import views
 from django.conf.urls.static import static
 from django.conf import settings
 
+# app_name = "airline_data"
+
 urlpatterns = [
     path('', views.index, name='index'),
     path('admin/', admin.site.urls),
     path('american/', include('americanworkplace.urls')),
     path('api/v1/airlines', views.airline_safety_data, name='api'),
     path('data/', views.show_airline_safety_data, name='data'),
-    path('visualisations', views.show_visualisations, name='visualisations')
+    path('visualisations', views.show_visualisations, name='visualisations'),
+
+    # Airline data CRUD
+    path('list', views.airline_list, name='airline_list'),
+    path('new', views.airline_create, name='airline_new'),
+    path('edit/<int:pk>', views.airline_update, name='airline_edit'),
+    path('delete/<int:pk>', views.airline_delete, name='airline_delete'),
+
 ]
 
 
